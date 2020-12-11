@@ -27,13 +27,18 @@ class Flow_element():
                 info('定位错误：%s %s'%(location_method,locaton_element))
         except Exception as e:
             info("定位失败：%s"%e)
-    def operation(self,send_operation=None,data=None):
+    def operation(self,send_operation=None,data=None,clear_data=None):
+        self.driver.execute_script("arguments[0].setAttribute('style',arguments[1]);", self.locat,
+                              "background:green;border:2px solid red;")
         try:
             if send_operation == 'send_keys' :
-                self.locat.send_keys(Keys.CONTROL + 'a')
-                self.locat.send_keys(Keys.BACKSPACE)
+                if clear_data != 'N':
+                    self.locat.send_keys(Keys.CONTROL + 'a')
+                    self.locat.send_keys(Keys.BACKSPACE)
+                # print(data)
                 if data != None:
                     self.locat.send_keys(data)
+                    #time.sleep(1)
             elif send_operation == 'click':
                 self.locat.click()
             elif send_operation == "backspace":#清空输入框

@@ -35,6 +35,7 @@ class test_path:
                         path = self.Readexcel_element_path.element_path(element_row)#拿取定位方法元素操作
                         # path_test_items = self.Readexcel_element_path.test_items(element_row)#测试功能项
                         data = self.Readexcel_data.test_data(case_row)#测试数据
+                        clear_data = self.Readexcel_data.clear_data(case_row)
                         assert_local_method = self.Readexcel_data.test_assert(case_row)#断言定位
                         assert_method = self.Readexcel_data.assert_method(case_row)#断言方法
                         assert_data = self.Readexcel_data.test_assert_data(case_row)#断言数据
@@ -49,7 +50,7 @@ class test_path:
                                 if a == len(data):
                                     a = 0
                                 else:
-                                    self.FLow_element.operation(send_operation=ele_path[2],data=data[a])
+                                    self.FLow_element.operation(send_operation=ele_path[2],data=data[a],clear_data=clear_data)
                                     a+=1
                             else:
                                 self.FLow_element.operation(send_operation=ele_path[2])
