@@ -20,7 +20,7 @@
 <body>
 
 
-<div id="app" style="background_color:#99a9bf">
+<div id="app" style="background-color:rgb(205 213 224)">
    <el-row>
   <el-col :span="24"><div class="grid-content" style="margin:0 auto;text-aligin:center;">
     <h2 align="center">自动化测试报告</h2>
@@ -44,10 +44,10 @@
 
     <el-row>
   <el-col :span="24"><div>
-      <template>
+    <template>
   <el-table
     :data="tableData"
-    height="200"
+    height="250"
     border
     :header-cell-style="{'text-align':'center'}"
     :cell-style="{'text-align':'center'}"
@@ -133,48 +133,46 @@
     new Vue({
       el: '#app',
       data: function() {
-        return { visible: false }
+        return { visible: false,
+         tableData: [{
+          test_case: '2016-05-03',
+          count: '王小虎',
+          pass: '上海市普陀区金沙江路 1518 弄',
+          fail:3,
+          error:4,
+          view:45,
+          error_view:90,
+        },{
+          test_case: '2016-05-03',
+          count: '王小虎',
+          pass: '上海市普陀区金沙江路 1518 弄',
+          fail:3,
+          error:4,
+          view:45,
+          error_view:90,
+        },]
+         }
       }
     })
 
   </script>
-<script>
-export default {
-    data() {
-      return {
-        tableData: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }]
-      }
-    }
-  }
-</script>
+<!--<script>-->
+<!--export default {-->
+<!--    data() {-->
+<!--      return {-->
+<!--        tableData: [{-->
+<!--          test_case: '2016-05-03',-->
+<!--          count: '王小虎',-->
+<!--          pass: '上海市普陀区金沙江路 1518 弄',-->
+<!--          fail:3,-->
+<!--          error:4,-->
+<!--          view:45,-->
+<!--          error_view:90,-->
+<!--        },]-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
    <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.querySelector('#main'));
