@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <!-- import CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="//unpkg.com/vue"></script>
+<script src="//unpkg.com/element-ui"></script>
+<script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+
+<script>
+  ELEMENT.locale(ELEMENT.lang.en)
+</script>
   <script src="echarts.min.js"></script>
 </head>
 
@@ -39,6 +49,8 @@
     :data="tableData"
     height="200"
     border
+    :header-cell-style="{'text-align':'center'}"
+    :cell-style="{'text-align':'center'}"
     style="width: 100%">
     <el-table-column
       prop="test_case"
@@ -47,33 +59,27 @@
     </el-table-column>
     <el-table-column
       prop="count"
-      label="总数"
-      width="100">
+      label="总数">
     </el-table-column>
     <el-table-column
       prop="pass"
-      label="通过"
-      width="100">
+      label="通过">
     </el-table-column>
     <el-table-column
       prop="fail"
-      label="失败"
-      width="100">
+      label="失败">
     </el-table-column>
     <el-table-column
       prop="error"
-      label="错误"
-      width="100">
+      label="错误">
     </el-table-column>
     <el-table-column
       prop="view"
-      label="视图"
-      width="100">
+      label="视图">
     </el-table-column>
     <el-table-column
       prop="error_view"
-      label="错误截图"
-      width="200">
+      label="错误截图">
     </el-table-column>
   </el-table>
 </template>
