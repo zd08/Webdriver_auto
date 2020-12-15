@@ -37,8 +37,12 @@ class Readexcel_data(object):
         self.path = self.document_path.read_data_path()
         self.wb = load_workbook(self.path)
         self.sheet = self.wb['Sheet1']
+    def test_order_number(self,row):
+        return self.sheet.cell(row, column=1).value
     def test_items(self,row):
         return self.sheet.cell(row, column=2).value  #测试项
+    def test_son_items(self,row):
+        return self.sheet.cell(row, column=3).value
     def clear_data(self,row):
         return self.sheet.cell(row, column=4).value
     def test_data(self,row):

@@ -28,8 +28,8 @@ class Flow_element():
         except Exception as e:
             info("定位失败：%s"%e)
     def operation(self,send_operation=None,data=None,clear_data=None):
-        self.driver.execute_script("arguments[0].setAttribute('style',arguments[1]);", self.locat,
-                              "background:green;border:2px solid red;")
+        # self.driver.execute_script("arguments[0].setAttribute('style',arguments[1]);", self.locat,
+        #                       "background:green;border:2px solid red;")
         try:
             if send_operation == 'send_keys' :
                 if clear_data != 'N':
