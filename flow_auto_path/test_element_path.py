@@ -88,7 +88,7 @@ class test_path:
 
                             success += 1
                             table_1.append("pass")
-                            info(except_result)
+                            info("%s执行成功"%test_son_data)
                         except Exception as e:
                             screen = Screenshoot_web(self.assert_data_[1])
                             screen_path = screen.screenshoot()
@@ -96,7 +96,7 @@ class test_path:
                             fail_count += 1
                             table_1.append("fail")
                             table_1.append(screen_path.replace("\\", "/"))
-                            info("%s执行失败"%test_path_item)
+                            info("%s执行失败"%test_son_data)
                         table.append(table_1)
         time_t = time.time()
         time_time = time_t-time_s
