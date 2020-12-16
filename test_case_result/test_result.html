@@ -75,7 +75,10 @@
     </el-table-column>
     <el-table-column
       prop="error_view"
-      label="错误截图">
+      label="错误截图" show-overflow-tooltip>
+         <template slot-scope="scope">
+    <a href="scope.row.error_view" target="_blank" class="buttonText">{{scope.row.error_view}}</a>
+  </template>
     </el-table-column>
   </el-table>
 </template>
@@ -142,7 +145,7 @@
           fail:3,
           error:4,
           view:45,
-          error_view:90,
+          error_view:'E:/Webdriver_auto/error_screenshot/screenshot_view/2020_12_16_11_18_18.png',
         },]
          }
       }
@@ -209,3 +212,7 @@
     </script>
 
 </html>
+
+<!--<template scope="scope">-->
+<!--          <a :href="'http://'+ scope.row.show" target="_blank" style="text-decoration:none;">{{scope.row.show}}</a>-->
+<!--        </template>-->

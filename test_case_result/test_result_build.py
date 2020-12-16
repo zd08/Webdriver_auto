@@ -73,13 +73,8 @@ class Test_result(object):
           align="center">
         </el-table-column>
         <el-table-column
-          prop="pass"
-          label="通过"
-          align="center">
-        </el-table-column>
-        <el-table-column
-          prop="fail"
-          label="失败"
+          prop="test_result"
+          label="测试结果"
           align="center">
         </el-table-column>
         <el-table-column
@@ -96,6 +91,9 @@ class Test_result(object):
           prop="error_view"
           label="错误截图"
           align="center">
+          <template slot-scope="scope">
+         <a :href="scope.row.error_view" target="_blank" class="buttonText">{{scope.row.error_view}}</a>
+         </template>
         </el-table-column>
         </el-table>
         </template>
@@ -137,26 +135,15 @@ class Test_result(object):
             ''').safe_substitute(start_time=self.start_time,count_time=self.count_time,success=self.success)
         self.table_result=''
         for i in self.table:
-            if i[2] == 'pass':
-                self.table_result +=Template('''{
+            self.table_result +=Template('''{
                             test_case:' ${table0}',
                             count: '${table1}',
-                            pass: '${table2}',
-                            fail:"",
+                            test_result: '${table2}',
                             error:'',
                             view:'',
-                            error_view:'',
-                            },''').safe_substitute(table0=i[0],table1=i[1],table2='pass')
-            else:
-                self.table_result += Template('''{
-                                            test_case: '${table0}',
-                                            count: '${table1}',
-                                            pass: "",
-                                            fail:'${table2}',
-                                            error:'',
-                                            view:'',
-                                            error_view:'',
-                                            },''').safe_substitute(table0=i[0], table1=i[1], table2='fail')
+                            error_view:'${table3}',
+                            },''').safe_substitute(table0=i[0],table1=i[1],table2=i[2],table3=i[3] if len(i)>3 else '')
+
 
         self.table = Template('''
         <script>
@@ -182,9 +169,9 @@ class Test_result(object):
     cellStyle(row, column, rowIndex, columnIndex){//根据报警级别显示颜色
         // console.log(row);
         console.log(row.column.label);
-        if (row.column.label==="通过" && row.row.pass==="pass"){
+        if (row.column.label==="测试结果" && row.row.test_result==="pass"){
           return 'color:green'
-        }else if(row.column.label==="失败" && row.row.fail==="pass" ){
+        }else if(row.column.label==="测试结果" && row.row.test_result==="fail" ){
           return 'color:red'
         }
       },}
@@ -238,3 +225,5 @@ class Test_result(object):
 # a=Test_result()
 # a.result()
 # a.file_build()
+# table=lambda x:self.table[3] if len(self.table)>3 else None,view=lambda x:'截图'
+#         if  )

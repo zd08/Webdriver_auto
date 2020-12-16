@@ -70,7 +70,7 @@ class test_path:
                                     a = 0
                                 else:
                                     self.FLow_element.operation(send_operation=ele_path[2],data=data[a],clear_data=clear_data)
-                                    a+=1
+                                    a += 1
                             else:
                                 self.FLow_element.operation(send_operation=ele_path[2])
                         time.sleep(1)
@@ -90,15 +90,15 @@ class test_path:
                             table_1.append("pass")
                             info(except_result)
                         except Exception as e:
-                            screen =Screenshoot_web(self.assert_data_[1])
-                            screen.screenshoot()
+                            screen = Screenshoot_web(self.assert_data_[1])
+                            screen_path = screen.screenshoot()
+
                             fail_count += 1
                             table_1.append("fail")
+                            table_1.append(screen_path.replace("\\", "/"))
                             info("%s执行失败"%test_path_item)
                         table.append(table_1)
         time_t = time.time()
         time_time = time_t-time_s
         count_time = time.strftime('%M:%S' ,time.localtime(time_time))
-        print(time.localtime(time_time))
-        print(count_time)
-        Test_result(count_time=count_time,success = success,fail_count=fail_count,start_time=start_time,table=table)
+        Test_result(count_time=count_time,success=success,fail_count=fail_count,start_time=start_time,table=table)
