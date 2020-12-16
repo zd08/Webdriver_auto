@@ -5,7 +5,7 @@ from string import Template
 class Test_result(object):
     def __init__(self,**kwargs):
         self.parentDirPath = os.path.dirname(os.path.abspath(__file__))
-        self.time = str(time.strftime('%Y_%m_%d_%M_%I_%S' , time.localtime()))+'.html'
+        self.time = str(time.strftime('%Y_%m_%d_%H_%M_%S' , time.localtime()))+'.html'
         self.path = os.path.join(self.parentDirPath,'test_report',self.time)
         self.start_time=kwargs['start_time']
         self.count_time = kwargs['count_time']

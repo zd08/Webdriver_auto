@@ -7,7 +7,7 @@ class Screenshoot_web:
     def __init__(self,webdriver):
         self.webdriver:WebDriver = webdriver
         self.path = os.path.dirname(os.path.abspath(__file__))
-        self.path_screenshoot = os.path.join(self.path,str(time.strftime('%Y_%m_%d_%M_%I_%S' , time.localtime()))+'.png')
+        self.path_screenshoot = os.path.join(self.path,str(time.strftime('%Y_%m_%d_%H_%M_%S' , time.localtime()))+'.png')
         # print(self.path_screenshoot)
     def screenshoot(self):
         try:

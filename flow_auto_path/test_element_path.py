@@ -34,7 +34,7 @@ class test_path:
         # self.table = kwargs['table']
         success = 0
         fail_count = 0
-        start_time = time.strftime('%Y:%m:%d %M:%I:%S' , time.localtime())
+        start_time = time.strftime('%Y-%m-%d %H:%M:%S' , time.localtime())
         time_s = time.time()
         table=[]
         for element_row in range(2,self.element_max+1):
@@ -97,5 +97,8 @@ class test_path:
                             info("%s执行失败"%test_path_item)
                         table.append(table_1)
         time_t = time.time()
-        count_time = time_t - time_s
+        time_time = time_t-time_s
+        count_time = time.strftime('%M:%S' ,time.localtime(time_time))
+        print(time.localtime(time_time))
+        print(count_time)
         Test_result(count_time=count_time,success = success,fail_count=fail_count,start_time=start_time,table=table)
