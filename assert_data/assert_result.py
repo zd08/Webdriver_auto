@@ -1,7 +1,11 @@
 from log.Log import info
+
+
 class Assert:
-    def __init__(self,move_data,result,assert_methodi):
-        self.data=move_data
+    '''断言操作'''
+
+    def __init__(self, move_data, result, assert_methodi):
+        self.data = move_data
         self.result = result
         # print(self.data,self.result)
         if assert_methodi == '相等':

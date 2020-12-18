@@ -54,13 +54,13 @@ class Readexcel_data(object):
             return data.split("->")
     def test_assert(self,row):
         data = self.sheet.cell(row, column=6).value #断言定位
-        return data.split(":")
+        return data.split("%")
     def assert_method(self,row):
         data = self.sheet.cell(row,column=7).value #断言方法
         return data.split(",")
     def test_assert_data(self,row):
         data = self.sheet.cell(row,column=8).value #断言数据
-        return data.split(':')
+        return data.split('%')
     def test_except_result(self,row):
         return self.sheet.cell(row,column=9).value #预期结果
 if __name__ == "__main__":
