@@ -59,7 +59,7 @@ class Flow_element():
                 self.driver.refresh()
             elif send_operation == "text":
                 data_text = self.locat.text
-                return data_text, self.driver
+                return data_text
             elif send_operation == 'value':
                 # print(self.driver.page_source)
                 return [self.locat.get_attribute('value')]
