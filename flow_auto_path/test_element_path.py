@@ -58,7 +58,6 @@ class test_path:
                         # print(data)
                         for i in path:
                             ele_path = i.split('%')
-
                             # print(ele_path)
                             if ele_path[0] in ['xpath', 'css', 'class', 'id', 'name']:
                                 self.FLow_element.location(ele_path[0], ele_path[1])
@@ -78,24 +77,23 @@ class test_path:
                         time.sleep(1)
                         if assert_local_method[0] in ['xpath', 'css', 'class', 'id', 'name']:
                             self.FLow_element.location(assert_local_method[0], assert_local_method[1])
+
                         elif assert_local_method[0] == '图片':
                             pass
-
                         self.assert_data_ = self.FLow_element.page_operation(send_operation=assert_local_method[2])
+
                         try:
                             b = 0
                             for assert_methodi in assert_method:
-                                # print(self.assert_data_,assert_methodi,assert_data[b])
-                                Assert(self.assert_data_[0], assert_data[b], assert_methodi)
+                                Assert(self.assert_data_, assert_data[b], assert_methodi)
                                 b += 1
-
                             success += 1
                             table_1.append("pass")
                             info("%s执行成功" % test_son_data)
                         except Exception as e:
-                            screen = Screenshoot_web(self.assert_data_[1])
+                            assert_driver = self.FLow_element.return_driver()
+                            screen = Screenshoot_web(assert_driver)
                             screen_path = screen.screenshoot()
-
                             fail_count += 1
                             table_1.append("fail")
                             table_1.append(screen_path.replace("\\", "/"))
