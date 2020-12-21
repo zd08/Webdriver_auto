@@ -9,27 +9,22 @@ import time
 class Flow_element():
     def __init__(self, driver):
         self.driver: WebDriver = driver
-        # print(self.driver)
+        self.locat_method_dict = {
+            "xpath":By.XPATH,
+            "id":By.ID,
+            "css":By.CSS_SELECTOR,
+            "class":By.CLASS_NAME,
+            "name":By.NAME
+        }
 
     def location(self, location_method=None, locaton_element=None):
         '''定位操作'''
         # print(location_method,locaton_element)
         try:
             if location_method != None and locaton_element != None:
-
-                if location_method == 'css':
-
-                    self.locat = self.driver.find_element(By.CSS_SELECTOR, locaton_element)
-
-                elif location_method == 'xpath':
-                    self.locat = self.driver.find_element(By.XPATH, locaton_element)
-                elif location_method == 'id':
-                    self.locat = self.driver.find_element(By.ID, locaton_element)
-                else:
-                    info("无定位方法")
-
+                    self.locat = self.driver.find_element(self.locat_method_dict[location_method], locaton_element)
             else:
-                info('定位错误：%s %s' % (location_method, locaton_element))
+                    info('定位错误：%s %s' % (location_method, locaton_element))
         except Exception as e:
             info("定位失败：%s" % e)
 
