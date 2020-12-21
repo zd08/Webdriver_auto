@@ -85,7 +85,7 @@ class test_path:
                         try:
                             b = 0
                             for assert_methodi in assert_method:
-                                Assert(self.assert_data_, assert_data[b], assert_methodi)
+                                Assert(self.assert_data_[0], assert_data[b], assert_methodi)
                                 b += 1
                             success += 1
                             table_1.append("pass")
