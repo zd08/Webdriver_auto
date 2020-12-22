@@ -7,6 +7,7 @@ import time
 
 
 class Flow_element():
+    '''元素数据操作'''
     def __init__(self, driver):
         self.driver: WebDriver = driver
         self.locat_method_dict = {
@@ -40,7 +41,6 @@ class Flow_element():
                 # print(data)
                 if data != None:
                     self.locat.send_keys(data)
-
             elif send_operation == 'click':
                 # print(self.driver.page_source)
                 self.locat.click()
@@ -50,20 +50,22 @@ class Flow_element():
                 self.locat.send_keys(Keys.BACKSPACE)
             elif send_operation == "actionchains":  # 鼠标悬停
                 ActionChains(self.driver).move_to_element(self.locat).perform()
-            elif send_operation == "refresh":
-                self.driver.refresh()
             elif send_operation == "text":
                 data_text = self.locat.text
                 return [data_text]
             elif send_operation == 'value':
                 # print(self.driver.page_source)
                 return [self.locat.get_attribute('value')]
+            elif send_operation == 'is_selected':
+                return self.locat.is_selected()
+            elif send_operation == "refresh":
+                self.driver.refresh()
 
         except Exception as e:
             info("操作失败:%s" % e)
 
-    def js_operation(self):
-        pass
+    def js_operation(self,js_oper):
+        self.driver.execute_script(js_oper,self.locat)#"js操作","元素定位"
 
     def web_operation(self):
         pass
