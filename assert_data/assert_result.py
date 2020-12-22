@@ -14,10 +14,8 @@ class Assert:
              'in':self.assert_in,
              'notin':self.assert_notin,
              }
-        try:
-           dic[assert_methodi]()
-        except Exception as e:
-           info("断言错误：",e)
+
+        dic[assert_methodi]()
 
     def assert_equation(self):
         assert self.data == self.result
