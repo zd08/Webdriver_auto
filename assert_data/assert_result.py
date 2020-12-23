@@ -14,7 +14,6 @@ class Assert:
              'in':self.assert_in,
              'notin':self.assert_notin,
              }
-
         dic[assert_methodi]()
 
     def assert_equation(self):

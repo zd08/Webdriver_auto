@@ -52,39 +52,16 @@ class test_path:
                         assert_method = self.Readexcel_data.assert_method(case_row)  # 断言方法
                         assert_data = self.Readexcel_data.test_assert_data(case_row)  # 断言数据
                         except_result = self.Readexcel_data.test_except_result(case_row)  # 预期结果
-                        a = 0
                         table_1.append(test_son_data)
                         table_1.append(test_order_number)
-                        # print(data)
-                        for i in path:
-                            ele_path = i.split('%')
-                            # print(ele_path)
-                            if ele_path[0] in ['xpath', 'css', 'class', 'id', 'name']:
-                                self.FLow_element.location(ele_path[0], ele_path[1])
-                                if ele_path[2] == 'send_keys' and data != None:  # send_keys执行if，其它执行else
-                                    if a == len(data):
-                                        a = 0
-                                    else:
-                                        self.FLow_element.page_operation(send_operation=ele_path[2], data=data[a],
-                                                                         clear_data=clear_data)
-                                        a += 1
-                                else:
-                                    self.FLow_element.page_operation(send_operation=ele_path[2])
-                            elif ele_path[0] == 'js':
-                                pass
-                            elif ele_path[0] == 'wb':
-                                pass
-                        time.sleep(1)
-                        if assert_local_method[0] in ['xpath', 'css', 'class', 'id', 'name']:
-                            self.FLow_element.location(assert_local_method[0], assert_local_method[1])
-
-                        elif assert_local_method[0] == '图片':
-                            pass
-                        self.assert_data_ = self.FLow_element.page_operation(send_operation=assert_local_method[2])
+                        self.opthon_path(path,clear_data,data)
+                        self.assert_data_=self.opthon_path(assert_local_method,)
 
                         try:
                             b = 0
                             for assert_methodi in assert_method:
+                                #print(type(self.assert_data_[0]),type(assert_data[b]))
+                                print(self.assert_data_[0], assert_data[b])
                                 Assert(self.assert_data_[0], assert_data[b], assert_methodi)
                                 b += 1
                             success += 1
@@ -104,3 +81,26 @@ class test_path:
         count_time = time.strftime('%M:%S', time.localtime(time_time))
         # Test_result(count_time=count_time,success=success,fail_count=fail_count,start_time=start_time,table=table)
         self.FLow_element.return_driver().quit()
+
+    def opthon_path(self,path,clear_data=None,data=None,a=0):
+        for i in path:
+            ele_path = i.split('%')
+            # print(ele_path)
+            if ele_path[0] in ['xpath', 'css', 'class', 'id', 'name']:
+                self.FLow_element.location(ele_path[0], ele_path[1])
+                if ele_path[2] == 'send_keys' and data != None:  # send_keys执行if，其它执行else
+                    if a == len(data):
+                        a = 0
+                    else:
+                        self.FLow_element.page_operation(send_operation=ele_path[2], data=data[a],
+                                                         clear_data=clear_data)
+                        a += 1
+                else:
+                    assert_data_=self.FLow_element.page_operation(send_operation=ele_path[2])
+            elif ele_path[0] == 'js':
+                pass
+            elif ele_path[0] == 'wb':
+                self.FLow_element.web_operation(send_operation=ele_path[1])
+        if assert_data_:
+            return assert_data_
+

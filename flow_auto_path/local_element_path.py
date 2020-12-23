@@ -58,8 +58,6 @@ class Flow_element():
                 return [self.locat.get_attribute('value')]
             elif send_operation == 'is_selected':
                 return self.locat.is_selected()
-            elif send_operation == "refresh":
-                self.driver.refresh()
 
         except Exception as e:
             info("操作失败:%s" % e)
@@ -67,8 +65,9 @@ class Flow_element():
     def js_operation(self,js_oper):
         self.driver.execute_script(js_oper,self.locat)#"js操作","元素定位"
 
-    def web_operation(self):
-        pass
+    def web_operation(self,send_operation):
+        if send_operation == "refresh":
+            self.driver.refresh()
 
     def return_driver(self):
         return self.driver
