@@ -4,7 +4,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
 from log.Log import info
 import time
-
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 class Flow_element():
     '''元素数据操作'''
@@ -22,17 +23,20 @@ class Flow_element():
         '''定位操作'''
         # print(location_method,locaton_element)
         try:
+
             if location_method != None and locaton_element != None:
-                    self.locat = self.driver.find_element(self.locat_method_dict[location_method], locaton_element)
+                WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((self.locat_method_dict[location_method],locaton_element)))
+                self.locat = self.driver.find_element(self.locat_method_dict[location_method], locaton_element)
             else:
-                    info('定位错误：%s %s' % (location_method, locaton_element))
+                info('定位错误：%s %s' % (location_method, locaton_element))
         except Exception as e:
             info("定位失败：%s" % e)
 
     def page_operation(self, send_operation=None, data=None, clear_data=None):
         '''数据操作'''
         # self.driver.execute_script("arguments[0].setAttribute('style',arguments[1]);", self.locat,
-        #                            "background:green;border:2px solid red;")
+        # "background:green;border:2px solid red;")
+        time.sleep(0.3)
         try:
             if send_operation == 'send_keys':
                 if clear_data != 'N':
@@ -57,7 +61,7 @@ class Flow_element():
                 # print(self.driver.page_source)
                 return [self.locat.get_attribute('value')]
             elif send_operation == 'is_selected':
-                return self.locat.is_selected()
+                return [str(self.locat.is_selected())]
 
         except Exception as e:
             info("操作失败:%s" % e)
@@ -68,6 +72,7 @@ class Flow_element():
     def web_operation(self,send_operation):
         if send_operation == "refresh":
             self.driver.refresh()
+            time.sleep(0.4)
 
     def return_driver(self):
         return self.driver
