@@ -1,5 +1,6 @@
 from openpyxl import load_workbook,workbook
 import os
+from read_writer_excel.read_case import Read_case
 class Document_path:
     '''文件路径'''
     def read_element_path(self):
@@ -12,11 +13,11 @@ class Document_path:
         return self.excelPath1
 class Readexcel_element_path:
     '''读取element_path'''
-    def __init__(self):
-        self.document_path = Document_path()
-        self.path = self.document_path.read_element_path()
-        self.wb = load_workbook(self.path)
-        self.sheet = self.wb['Sheet1']
+    def __init__(self,path):
+        self.document_path = Read_case()
+        self.path = self.document_path.all_file()
+        self.wb = load_workbook(path)
+        self.sheet = self.wb['Sheet2']
 
     def order_number(self,row):
         return self.sheet.cell(row=row,column =1).value
@@ -32,10 +33,10 @@ class Readexcel_element_path:
 
 class Readexcel_data(object):
     '''读取case'''
-    def __init__(self):
-        self.document_path = Document_path()
-        self.path = self.document_path.read_data_path()
-        self.wb = load_workbook(self.path)
+    def __init__(self,path):
+        self.document_path = Read_case()
+        self.path = self.document_path.all_file()
+        self.wb = load_workbook(path)
         self.sheet = self.wb['Sheet1']
     def test_order_number(self,row):
         return self.sheet.cell(row, column=1).value

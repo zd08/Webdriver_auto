@@ -13,7 +13,6 @@ class Main:
         info("执行中")
         self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(30)
-
         self.driver.get("http://192.168.9.165")
         #self.driver.maximize_window()
         self.now_handle = self.driver.current_window_handle
