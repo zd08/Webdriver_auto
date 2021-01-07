@@ -103,10 +103,11 @@ class test_path:
                 try:
                     self.FLow_element.location(ele_path[0], ele_path[1])
                 except Exception as e:
+                    info("第一次定位执行失败：",e)
                     try:
                         self.FLow_element.location(ele_path[0], ele_path[1])
-                    except:
-                        info("定位失败")
+                    except Exception as e:
+                        info("第二次定位执行失败：",e)
                 if ele_path[2] == 'send_keys' and data != None:  # send_keys执行if，其它执行else
                     if a == len(data):
                         a = 0
@@ -115,17 +116,23 @@ class test_path:
                             self.FLow_element.page_operation(send_operation=ele_path[2], data=data[a],
                                                          clear_data=clear_data)
                         except Exception as e:
+                            info("第一次操作执行失败：", e)
                             try:
                                 self.FLow_element.page_operation(send_operation=ele_path[2], data=data[a],
                                                              clear_data=clear_data)
                             except:
-                                info("执行失败")
+                                info("第二次操作执行失败：", e)
                         a += 1
                 else:
                     try:
                        assert_data_=self.FLow_element.page_operation(send_operation=ele_path[2])
                     except Exception as e:
-                        info("断言失败",e)
+                        info("断言数据读取失败：",e)
+                        try:
+                            assert_data_ = self.FLow_element.page_operation(send_operation=ele_path[2])
+                        except Exception as e:
+                            info("断言数据二次读取失败：",e)
+
             elif ele_path[0] == 'js':
                 pass
             elif ele_path[0] == 'wb':

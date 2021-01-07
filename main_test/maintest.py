@@ -11,12 +11,20 @@ class Main:
     def __init__(self):
 
         info("执行中")
-        self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(30)
-        self.driver.get("http://192.168.9.165")
+        duan="执行中"
+        try:
+            self.driver = webdriver.Chrome()
+            self.driver.implicitly_wait(30)
+            self.driver.get("http://192.168.9.165")
+        except :
+            duan = None
+            info('无法打开网页')
+            self.driver.quit()
         #self.driver.maximize_window()
-        self.now_handle = self.driver.current_window_handle
-        self.driver = test_path(self.driver)
+        if duan == "执行中":
+            self.now_handle = self.driver.current_window_handle#获取当前窗口句柄
+            self.driver = test_path(self.driver)
+
 
 
 
