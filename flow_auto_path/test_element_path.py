@@ -109,7 +109,6 @@ class test_path:
 
     def opthon_path(self,path,clear_data=None,data=None,a=0):
         assert_data_ = None
-        print(path)
         for i in path:
             self.ele_parameter = 0
             ele_path = i.split('%')

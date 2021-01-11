@@ -17,7 +17,7 @@ class Readexcel_element_path:
         self.document_path = Read_case()
         self.path = self.document_path.all_file()
         self.wb = load_workbook(path)
-        self.sheet = self.wb['Sheet2']
+        self.sheet = self.wb['path']
 
     def order_number(self,row):
         return self.sheet.cell(row=row,column =1).value
@@ -37,7 +37,7 @@ class Readexcel_data(object):
         self.document_path = Read_case()
         self.path = self.document_path.all_file()
         self.wb = load_workbook(path)
-        self.sheet = self.wb['Sheet1']
+        self.sheet = self.wb['case']
     def test_order_number(self,row):
         return self.sheet.cell(row, column=1).value
     def test_items(self,row):
