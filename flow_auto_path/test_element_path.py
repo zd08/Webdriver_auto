@@ -15,6 +15,7 @@ class test_path:
         self.read_case =Read_case()
         self.read_case_path = self.read_case.all_file()
         self.element_option_run()
+        self.error_pata = ''
 
     def element_option_run(self):
 
@@ -54,8 +55,8 @@ class test_path:
                                 except_result = self.Readexcel_data.test_except_result(case_row)  # 预期结果
                                 table_1.append(test_path_item+test_son_data)
                                 table_1.append(str(case_t)+"_"+str(test_order_number))
-                                print('运行',path)
-                                print("断言",assert_local_method)
+                                # print('运行',path)
+                                # print("断言",assert_local_method)
 
                                 if data:
                                     clear_data = self.Readexcel_data.clear_data(case_row) # 是否清空输入框
@@ -63,51 +64,70 @@ class test_path:
                                     self.opthon_path(path,clear_data,data)
                                 if "wb%refresh" in assert_local_method[0]:
                                     time.sleep(0.5)
-                                self.assert_data_=self.opthon_path(assert_local_method,)
-                                try:
-                                    b = 0
-                                    for assert_methodi in assert_method:
-
-                                        Assert(self.assert_data_[0], assert_data[b], assert_methodi)
-                                        b += 1
-                                    success += 1
-                                    table_1.append("pass")
-                                    info("%s %s执行成功" % (test_order_number,test_son_data))
-                                except Exception as e:
+                                self.assert_data_ = self.opthon_path(assert_local_method, )
+                                if self.ele_parameter == 1:
+                                    print(2,self.ele_parameter)
+                                    table_1.append(self.error_pata)
                                     assert_driver = self.FLow_element.return_driver()
                                     screen = Screenshoot_web(assert_driver)
                                     screen_path = screen.screenshoot()
-                                    fail_count += 1
-                                    table_1.append("fail")
                                     table_1.append(screen_path.replace("\\", "/"))
-                                    info("%s执行失败" % test_son_data)
-                                table.append(table_1)
+                                    table.append(table_1)
+                                else:
+
+                                    try:
+                                        b = 0
+                                        for assert_methodi in assert_method:
+
+                                            Assert(self.assert_data_[0], assert_data[b], assert_methodi)
+                                            b += 1
+                                        success += 1
+                                        table_1.append("pass")
+                                        info("%s %s执行成功" % (test_order_number,test_son_data))
+                                    except Exception as e:
+                                        assert_driver = self.FLow_element.return_driver()
+                                        screen = Screenshoot_web(assert_driver)
+                                        screen_path = screen.screenshoot()
+                                        fail_count += 1
+                                        table_1.append("fail")
+                                        table_1.append(screen_path.replace("\\", "/"))
+                                        info("%s执行失败" % test_son_data)
+                                    table.append(table_1)
 
 
                 if element_row == self.element_max:
                     self.case_wb.close()
-        except:
+        except Exception as e:
+            info("运行错误")
+        finally:
             time_t = time.time()
             time_time = time_t - time_s
             self.count_time = time.strftime('%M:%S', time.localtime(time_time))
-        finally:
-            # Test_result(count_time=self.count_time,success=success,fail_count=fail_count,start_time=start_time,table=table)
+            Test_result(count_time=self.count_time,success=success,fail_count=fail_count,start_time=start_time,table=table)
             self.FLow_element.return_driver().quit()
 
 
     def opthon_path(self,path,clear_data=None,data=None,a=0):
         assert_data_ = None
+        print(path)
         for i in path:
+            self.ele_parameter = 0
             ele_path = i.split('%')
             if ele_path[0] in ['xpath', 'css', 'class', 'id', 'name']:
                 try:
                     self.FLow_element.location(ele_path[0], ele_path[1])
                 except Exception as e:
-                    info("第一次定位执行失败：",e)
+                    info("第一次定位执行失败")
                     try:
                         self.FLow_element.location(ele_path[0], ele_path[1])
                     except Exception as e:
-                        info("第二次定位执行失败：",e)
+                        self.ele_parameter = 1
+                        print(1,self.ele_parameter)
+                        self.error_pata = "定位执行错误"
+                        info("第二次定位执行失败")
+
+                if self.ele_parameter == 1:
+                    break
                 if ele_path[2] == 'send_keys' and data != None:  # send_keys执行if，其它执行else
                     if a == len(data):
                         a = 0
@@ -116,22 +136,28 @@ class test_path:
                             self.FLow_element.page_operation(send_operation=ele_path[2], data=data[a],
                                                          clear_data=clear_data)
                         except Exception as e:
-                            info("第一次操作执行失败：", e)
+                            info("第一次操作执行失败")
                             try:
                                 self.FLow_element.page_operation(send_operation=ele_path[2], data=data[a],
                                                              clear_data=clear_data)
                             except:
-                                info("第二次操作执行失败：", e)
+                                self.ele_parameter = 1
+                                self.error_pata = "操作执行错误"
+                                info("第二次操作执行失败")
                         a += 1
                 else:
                     try:
                        assert_data_=self.FLow_element.page_operation(send_operation=ele_path[2])
                     except Exception as e:
-                        info("断言数据读取失败：",e)
+                        info("断言数据读取失败")
                         try:
                             assert_data_ = self.FLow_element.page_operation(send_operation=ele_path[2])
                         except Exception as e:
-                            info("断言数据二次读取失败：",e)
+                            self.ele_parameter = 1
+                            self.error_pata = "断言执行错误执行错误"
+                            info("断言数据二次读取失败")
+                if self.ele_parameter == 1:
+                    break
 
             elif ele_path[0] == 'js':
                 pass

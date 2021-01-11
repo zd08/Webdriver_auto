@@ -57,7 +57,7 @@ class Test_result(object):
         <el-table
         :data="tableData"
         :header-cell-style="tableHeaderColor"
-        height="370"
+        height=100%
         border  
         :cell-style="cellStyle"
         style="width: 100%">
@@ -84,12 +84,15 @@ class Test_result(object):
         </el-table-column>
         <el-table-column
           prop="view"
-          label="视图"
+          label="错误视图"
           align="center">
+          <template slot-scope="scope">
+         <a :href="scope.row.view" target="_blank" class="buttonText">{{scope.row.view}}</a>
+         </template>
         </el-table-column>
         <el-table-column
           prop="error_view"
-          label="错误截图"
+          label="失败截图"
           align="center">
           <template slot-scope="scope">
          <a :href="scope.row.error_view" target="_blank" class="buttonText">{{scope.row.error_view}}</a>
@@ -135,14 +138,25 @@ class Test_result(object):
             ''').safe_substitute(start_time=self.start_time,count_time=self.count_time,success=self.success)
         self.table_result=''
         for i in self.table:
-            self.table_result +=Template('''{
-                            test_case:' ${table0}',
-                            count: '${table1}',
-                            test_result: '${table2}',
-                            error:'',
-                            view:'',
-                            error_view:'${table3}',
-                            },''').safe_substitute(table0=i[0],table1=i[1],table2=i[2],table3=i[3] if len(i)>3 else '')
+            if i[2] in ['pass','fail']:
+                self.table_result +=Template('''{
+                                test_case:' ${table0}',
+                                count: '${table1}',
+                                test_result: '${table2}',
+                                error:'',
+                                view:'',
+                                error_view:'${table3}',
+                                },''').safe_substitute(table0=i[0],table1=i[1],table2=i[2],table3=i[3] if len(i)>3 else '')
+            else:
+                self.table_result += Template('''{
+                                                test_case:' ${table0}',
+                                                count: '${table1}',
+                                                test_result: '',
+                                                error:'${table2}',
+                                                view:'${table3}',
+                                                error_view:'',
+                                                },''').safe_substitute(table0=i[0], table1=i[1], table2=i[2],
+                                                                       table3=i[3] if len(i) > 3 else '')
 
 
         self.table = Template('''
