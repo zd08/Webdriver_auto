@@ -33,8 +33,8 @@ class test_path:
                 self.Readexcel_element_path = Readexcel_element_path(test_path)
                 self.Readexcel_data = Readexcel_data(test_path)
                 self.case_wb = load_workbook(test_path)
-                self.case_max = self.case_wb['Sheet1'].max_row
-                self.element_max = self.case_wb['Sheet2'].max_row
+                self.case_max = self.case_wb['case'].max_row
+                self.element_max = self.case_wb['path'].max_row
                 for element_row in range(2, self.element_max + 1):
                     test_path_item = self.Readexcel_element_path.test_items(element_row)  # 执行功能项
                     execute = self.Readexcel_element_path.elemen_execute(element_row)  # 是否执行
